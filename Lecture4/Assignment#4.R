@@ -98,3 +98,5 @@ stratified_pricedoors = auto.price %>% group_by(num.of.doors) %>% filter(num.of.
 #Group by body style
 stratified_pricebody = auto.price %>% group_by(body.style) %>% sample_n(n, replace = FALSE)
 
+df_aov = aov(auto.price$normalized_logprice ~ auto.price$num.of.doors, data = stratified_pricedoors)
+summary(df_aov)
