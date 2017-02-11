@@ -11758,11 +11758,22 @@ div#notebook {
 <li>I am then normalizing the price and log(price) data using z-score algorithm.</li>
 <li>QQ test is being used to test the normality of price data.</li>
 <li>KS test is being used to compare and test the normality of price data.</li>
-<li>Student t-test is being used to gauge the effect of fuel type, drive wheel and aspiration on the price of automobile. <ul>
-<li>Gas vehicles have P-value of 0.1027, this would infer that average price of gas vehicles is higher than average price of the data set.</li>
-<li>Diesel vehicles have a P-value of 0.8161, such a high value would deduce that diesel vehicles are way more costlier when compared to gas vehicles.</li>
-<li>4WD vehicles with a p-value of .4727 are way costlier than the average price of the vehicles, FWD are the most affordable with a p-value of 0.0001541 and RWD are also above the average price of the automobiles.</li>
-<li>Aspiration of STD and TURBO on its own does not have a major effect on the price.In other words we do see a high p-value this value is however is being influenced by some other factor.</li>
+<li>While stratifying the data, I am not using the sample function as the dataset is too small and taking a sample is leading to inconsistent results on multiple runs.</li>
+<li>Welch t-test is being used to gauge the effect of fuel type, drive wheel and aspiration on the price of automobile. <ul>
+<li>One can clearly infer(Looking at means) that Diesel automobiles are costlier than Gas automobiles.</li>
+<li>RWD cars are the most expensive cars and FWD are the most affordable cars.</li>
+<li>Turbo cars are far more expensive than standard cars.</li>
+</ul>
+</li>
+<li>KS-test is being used to gauge the effect of fuel type, drive wheel and aspiration on the price of automobile. In this test I can only check if the distributions are same, i however cannot however make any numerical predictions as this test is not calculating any key metric (For Ex: mean, median, sd etc).<ul>
+<li>One can clearly infer that Diesel automobiles are priced way differently than Gas automobiles.</li>
+<li>RWD cars are the most expensive cars and FWD are the most affordable cars.</li>
+<li>Turbo cars are priced way differently than standard cars.</li>
+</ul>
+</li>
+<li>Visually comparing P-Value with KS - Statistics to confirm a drooping line as p-value approaches a maximum value of 1.</li>
+<li>Anova Analysis of price based on "Number of Doors" and "Body Style"<ul>
+<li>Analysis of "Number of Doors" accepts the null hypothesis and "Body Style" rejects the hypothesis.</li>
 </ul>
 </li>
 </ul>
@@ -11782,7 +11793,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[118]:</div>
+<div class="prompt input_prompt">In&nbsp;[131]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">rm</span><span class="p">(</span><span class="kt">list</span><span class="o">=</span><span class="kp">ls</span><span class="p">())</span>
@@ -11838,7 +11849,7 @@ In this process I have removed 10 records from this file. I now have a total of 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[119]:</div>
+<div class="prompt input_prompt">In&nbsp;[132]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Load and cleanse the csv file.</span>
@@ -11894,7 +11905,7 @@ normalized_logprice <span class="o">&lt;-</span> <span class="p">(</span>logpric
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[120]:</div>
+<div class="prompt input_prompt">In&nbsp;[133]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#Add log price and normalized log price to the data frame.</span>
@@ -11914,7 +11925,7 @@ auto.price <span class="o">=</span> mutate<span class="p">(</span>auto.price<spa
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Visually-test-normality">Visually test normality<a class="anchor-link" href="#Visually-test-normality">&#182;</a></h2><p>I am now going to use QQ plot to demonstrate the normality of normalised price and normalized log price data.</p>
 <ul>
-<li>You can see a factual straight line being formed in both the plots.</li>
+<li>You can see a factual straight line being formed in both the plots with normalized log price forming a visibly straighter line compared normalized price.</li>
 </ul>
 
 </div>
@@ -11922,7 +11933,7 @@ auto.price <span class="o">=</span> mutate<span class="p">(</span>auto.price<spa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[121]:</div>
+<div class="prompt input_prompt">In&nbsp;[134]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># QQ plot for price to visually check normality</span>
@@ -12349,7 +12360,7 @@ AcgwUd8SPhvlAAAAAElFTkSuQmCC"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[122]:</div>
+<div class="prompt input_prompt">In&nbsp;[135]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">## Plot the cdfs of standard data.</span>
@@ -12538,7 +12549,7 @@ QEiAwP8anjX+ZTmc0QAAAABJRU5ErkJggg=="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[123]:</div>
+<div class="prompt input_prompt">In&nbsp;[136]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">## Plot the cdfs on normalized data</span>
@@ -12740,8 +12751,8 @@ AgQQEiDgPwjfQLk1YKQSAAAAAElFTkSuQmCC"
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Run-KS-test-to-gauge-the-normality.">Run KS test to gauge the normality.<a class="anchor-link" href="#Run-KS-test-to-gauge-the-normality.">&#182;</a></h2><ul>
-<li>One can validate that K-S Statistic of normalized data is way less than standard data.</li>
+<h2 id="Run-KS-test-(One-Sample)-to-gauge-the-normality.">Run KS test (One Sample) to gauge the normality.<a class="anchor-link" href="#Run-KS-test-(One-Sample)-to-gauge-the-normality.">&#182;</a></h2><ul>
+<li>One can validate that K-S Statistic of normalized data (D = 0.42242) is way less than standard data(D = 1).</li>
 </ul>
 
 </div>
@@ -12749,12 +12760,12 @@ AgQQEiDgPwjfQLk1YKQSAAAAAElFTkSuQmCC"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[124]:</div>
+<div class="prompt input_prompt">In&nbsp;[137]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#K-S Test</span>
-ks.test<span class="p">(</span>normalized_price<span class="p">,</span>normalized_logprice<span class="p">)</span>
-ks.test<span class="p">(</span>price<span class="p">,</span>logprice<span class="p">)</span>
+ks.test<span class="p">(</span>normalized_price<span class="p">,</span> <span class="s">&quot;pnorm&quot;</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+ks.test<span class="p">(</span>price<span class="p">,</span> <span class="s">&quot;pnorm&quot;</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12767,8 +12778,8 @@ ks.test<span class="p">(</span>price<span class="p">,</span>logprice<span class=
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Warning message in ks.test(normalized_price, normalized_logprice):
-&#34;p-value will be approximate in the presence of ties&#34;</pre>
+<pre>Warning message in ks.test(normalized_price, &#34;pnorm&#34;, 1, 2):
+&#34;ties should not be present for the Kolmogorov-Smirnov test&#34;</pre>
 </div>
 </div>
 
@@ -12777,10 +12788,10 @@ ks.test<span class="p">(</span>price<span class="p">,</span>logprice<span class=
 
 <div class="output_text output_subarea ">
 <pre>
-	Two-sample Kolmogorov-Smirnov test
+	One-sample Kolmogorov-Smirnov test
 
-data:  normalized_price and normalized_logprice
-D = 0.15897, p-value = 0.01448
+data:  normalized_price
+D = 0.42242, p-value &lt; 2.2e-16
 alternative hypothesis: two-sided
 </pre>
 </div>
@@ -12789,8 +12800,8 @@ alternative hypothesis: two-sided
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Warning message in ks.test(price, logprice):
-&#34;p-value will be approximate in the presence of ties&#34;</pre>
+<pre>Warning message in ks.test(price, &#34;pnorm&#34;, 1, 2):
+&#34;ties should not be present for the Kolmogorov-Smirnov test&#34;</pre>
 </div>
 </div>
 
@@ -12799,9 +12810,9 @@ alternative hypothesis: two-sided
 
 <div class="output_text output_subarea ">
 <pre>
-	Two-sample Kolmogorov-Smirnov test
+	One-sample Kolmogorov-Smirnov test
 
-data:  price and logprice
+data:  price
 D = 1, p-value &lt; 2.2e-16
 alternative hypothesis: two-sided
 </pre>
@@ -12827,21 +12838,24 @@ alternative hypothesis: two-sided
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[125]:</div>
+<div class="prompt input_prompt">In&nbsp;[138]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#Stratifying the data.</span>
 n <span class="o">=</span> <span class="m">5</span>
 <span class="c1">#Group By Fuel Type</span>
-stratified_pricefuel <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>fuel.type<span class="p">)</span> <span class="o">%&gt;%</span> sample_n<span class="p">(</span>n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="c1">#stratified_pricefuel = auto.price %&gt;% group_by(fuel.type) %&gt;% sample_n(n, replace = FALSE)</span>
+stratified_pricefuel <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>fuel.type<span class="p">)</span>
 logpricegroupedbyfueltypegas <span class="o">=</span> stratified_pricefuel <span class="o">%&gt;%</span> filter<span class="p">(</span>fuel.type <span class="o">==</span> <span class="s">&#39;gas&#39;</span><span class="p">)</span>
 logpricegroupedbyfueltypediesel <span class="o">=</span> stratified_pricefuel <span class="o">%&gt;%</span> filter<span class="p">(</span>fuel.type <span class="o">==</span> <span class="s">&#39;diesel&#39;</span><span class="p">)</span>
 <span class="c1">#Group by Aspiration</span>
-stratified_priceasp <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>aspiration<span class="p">)</span> <span class="o">%&gt;%</span> sample_n<span class="p">(</span>n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="c1">#stratified_priceasp = auto.price %&gt;% group_by(aspiration) %&gt;% sample_n(n, replace = FALSE)</span>
+stratified_priceasp <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>aspiration<span class="p">)</span>
 logpricegroupedbyaspirationstd <span class="o">=</span> stratified_priceasp <span class="o">%&gt;%</span> filter<span class="p">(</span>aspiration <span class="o">==</span> <span class="s">&#39;std&#39;</span><span class="p">)</span>
 logpricegroupedbyaspirationsturbo <span class="o">=</span> stratified_priceasp <span class="o">%&gt;%</span> filter<span class="p">(</span>aspiration <span class="o">==</span> <span class="s">&#39;turbo&#39;</span><span class="p">)</span>
 <span class="c1">#Group by drive wheel</span>
-stratified_pricedrive <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>drive.wheels<span class="p">)</span> <span class="o">%&gt;%</span> sample_n<span class="p">(</span>n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="c1">#stratified_pricedrive = auto.price %&gt;% group_by(drive.wheels) %&gt;% sample_n(n, replace = FALSE)</span>
+stratified_pricedrive <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>drive.wheels<span class="p">)</span>
 logpricegroupedbydrivewheelfwd <span class="o">=</span> stratified_pricedrive <span class="o">%&gt;%</span> filter<span class="p">(</span>drive.wheels <span class="o">==</span> <span class="s">&#39;fwd&#39;</span><span class="p">)</span>
 logpricegroupedbydrivewheelrwd <span class="o">=</span> stratified_pricedrive <span class="o">%&gt;%</span> filter<span class="p">(</span>drive.wheels <span class="o">==</span> <span class="s">&#39;rwd&#39;</span><span class="p">)</span>
 logpricegroupedbydrivewheel4wd <span class="o">=</span> stratified_pricedrive <span class="o">%&gt;%</span> filter<span class="p">(</span>drive.wheels <span class="o">==</span> <span class="s">&#39;4wd&#39;</span><span class="p">)</span>
@@ -12857,12 +12871,21 @@ logpricegroupedbydrivewheel4wd <span class="o">=</span> stratified_pricedrive <s
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Test-the-impact-of-fuel-type,-drive-wheel-and-aspiration-on-price-data.">Test the impact of fuel type, drive wheel and aspiration on price data.<a class="anchor-link" href="#Test-the-impact-of-fuel-type,-drive-wheel-and-aspiration-on-price-data.">&#182;</a></h2><ul>
-<li>I am now using Student t-test to gauge the impact on price data wherein a confidence interval of 95% is being deduced</li>
-<li>Gas vehicles have P-value of 0.1027, this would infer that average price of gas vehicles is higher than average price of the data set.</li>
-<li>Diesel vehicles have a P-value of 0.8161, such a high value would deduce that diesel vehicles are way more costlier when compared to gas vehicles.</li>
-<li>4WD vehicles with a p-value of .4727 are way costlier than the average price of the vehicles, FWD are the most affordable with a p-value of 0.0001541 and RWD are also above the average price of the automobiles.</li>
-<li>Aspiration of STD and TURBO on its own does not have a major effect on the price.In other words we do see a high p-value this value is however is being influenced by some other factor.</li>
+<h2 id="Welch-T-Test-:-Test-the-impact-of-fuel-type,-drive-wheel-and-aspiration-on-price-data.">Welch T-Test : Test the impact of fuel type, drive wheel and aspiration on price data.<a class="anchor-link" href="#Welch-T-Test-:-Test-the-impact-of-fuel-type,-drive-wheel-and-aspiration-on-price-data.">&#182;</a></h2><ul>
+<li>I am now using Welch t-test to gauge the impact on price data wherein a confidence interval of 95% is being deduced i.e <strong>we don't want an Type 1 error of greater than 5%.</strong></li>
+<li>Gas vehicles have P-value of 0.6538, this very high P value would force us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong> and infer that there is a 65% likelihood of a Type 1 error if we reject the hypothesis. In other words atleast 65% of gas automobiles match the average price of an automobile from the dataframe.</li>
+<li>Diesel vehicles have P-value of 0.08375, this P value would force us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong> and infer that there is a 8% likelihood of a Type 1 error if we reject the hypothesis. In other words atleast 8% of diesel automobiles match the average price of an automobile from the dataframe.
+<pre><code> ** One can clearly infer(Looking at means) that Diesel automobiles are costlier than Gas automobiles.</code></pre>
+</li>
+<li>4WD vehicles have P-value of 0.1813, this P value would force us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong> and infer that there is a 18% likelihood of a Type 1 error if we reject the hypothesis. In other words atleast 18 % of 4WD automobiles match the average price of an automobile from the dataframe.</li>
+<li>FWD vehicles have P-value of 0.00000001593, this extremely low P value would force us to <strong><span style="color:red" >reject the null hypothesis&lt;/span&gt;</strong> and infer that there is a 0.000001593% likelihood of a Type 1 error if we reject the hypothesis. In other words average price of FWD does not match the average price of the car from the data frame.</li>
+<li>RWD vehicles have P-value of 0.00000000002175, this extremely low P value would force us to <strong><span style="color:red" >reject the null hypothesis&lt;/span&gt;</strong> and infer that there is a 0.000000002175% likelihood of a Type 1 error if we reject the hypothesis. In other words average price of RWD does not match the average price of the car from the data frame.
+<pre><code> **RWD cars are the most expensive cars and FWD are the most affordable cars</code></pre>
+</li>
+<li>Standard vehicles have P-value of 0.2534, this P value would force us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong> and infer that there is a 25% likelihood of a Type 1 error if we reject the hypothesis. In other words atleast 25 % of standard automobiles match the average price of an automobile from the dataframe.</li>
+<li>Turbo vehicles have P-value of 0.0003893, this extremely low P value would force us to <strong><span style="color:red" >reject the null hypothesis&lt;/span&gt;</strong> and infer that there is a 0.03893% likelihood of a Type 1 error if we reject the hypothesis. In other words average price of Turbo does not match the average price of the car from the data frame.
+<pre><code> **Turbo cars are far more expensive than standard cars.</code></pre>
+</li>
 </ul>
 
 </div>
@@ -12870,10 +12893,10 @@ logpricegroupedbydrivewheel4wd <span class="o">=</span> stratified_pricedrive <s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[126]:</div>
+<div class="prompt input_prompt">In&nbsp;[139]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">## Student T-Test to gauge the impact on the fule price.</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">## Student T-Test to gauge the impact on the fuel price.</span>
 <span class="c1">#Gauge impact of fuel type on price</span>
 t.test<span class="p">(</span>logpricegroupedbyfueltypegas<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">,</span> alternative <span class="o">=</span> <span class="s">&quot;two.sided&quot;</span><span class="p">)</span>
 t.test<span class="p">(</span>logpricegroupedbyfueltypediesel<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">,</span> alternative <span class="o">=</span> <span class="s">&quot;two.sided&quot;</span><span class="p">)</span>
@@ -12902,13 +12925,13 @@ t.test<span class="p">(</span>logpricegroupedbyaspirationsturbo<span class="o">$
 	Welch Two Sample t-test
 
 data:  logpricegroupedbyfueltypegas$normalized_logprice and auto.price$normalized_logprice
-t = -5.5069, df = 6.2748, p-value = 0.001299
+t = -0.4489, df = 363.98, p-value = 0.6538
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -1.262860 -0.491528
+ -0.2510588  0.1577406
 sample estimates:
     mean of x     mean of y 
--8.771942e-01  8.989748e-16 
+-4.665909e-02  8.989748e-16 
 </pre>
 </div>
 
@@ -12922,13 +12945,13 @@ sample estimates:
 	Welch Two Sample t-test
 
 data:  logpricegroupedbyfueltypediesel$normalized_logprice and auto.price$normalized_logprice
-t = 0.4905, df = 4.282, p-value = 0.6479
+t = 1.8062, df = 23.447, p-value = 0.08375
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -0.8666573  1.2504391
+ -0.05884393  0.87537791
 sample estimates:
    mean of x    mean of y 
-1.918909e-01 8.989748e-16 
+4.082670e-01 8.989748e-16 
 </pre>
 </div>
 
@@ -12942,13 +12965,13 @@ sample estimates:
 	Welch Two Sample t-test
 
 data:  logpricegroupedbydrivewheel4wd$normalized_logprice and auto.price$normalized_logprice
-t = -0.92481, df = 4.4333, p-value = 0.4026
+t = -1.4488, df = 9.0149, p-value = 0.1813
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -1.150415  0.558933
+ -0.7699184  0.1686483
 sample estimates:
     mean of x     mean of y 
--2.957412e-01  8.989748e-16 
+-3.006350e-01  8.989748e-16 
 </pre>
 </div>
 
@@ -12962,13 +12985,13 @@ sample estimates:
 	Welch Two Sample t-test
 
 data:  logpricegroupedbydrivewheelfwd$normalized_logprice and auto.price$normalized_logprice
-t = -1.6818, df = 4.454, p-value = 0.1606
+t = -5.8059, df = 307.86, p-value = 1.593e-08
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -1.3613185  0.3087247
+ -0.7196314 -0.3553186
 sample estimates:
     mean of x     mean of y 
--5.262969e-01  8.989748e-16 
+-5.374750e-01  8.989748e-16 
 </pre>
 </div>
 
@@ -12982,13 +13005,13 @@ sample estimates:
 	Welch Two Sample t-test
 
 data:  logpricegroupedbydrivewheelrwd$normalized_logprice and auto.price$normalized_logprice
-t = 1.6652, df = 4.2385, p-value = 0.1672
+t = 7.2722, df = 142.12, p-value = 2.175e-11
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -0.4453044  1.8568334
+ 0.6640949 1.1599101
 sample estimates:
    mean of x    mean of y 
-7.057645e-01 8.989748e-16 
+9.120025e-01 8.989748e-16 
 </pre>
 </div>
 
@@ -13002,13 +13025,13 @@ sample estimates:
 	Welch Two Sample t-test
 
 data:  logpricegroupedbyaspirationstd$normalized_logprice and auto.price$normalized_logprice
-t = 0.83617, df = 4.123, p-value = 0.4488
+t = -1.1441, df = 336.47, p-value = 0.2534
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -1.114221  2.090872
+ -0.33424825  0.08841795
 sample estimates:
-   mean of x    mean of y 
-4.883256e-01 8.989748e-16 
+    mean of x     mean of y 
+-1.229152e-01  8.989748e-16 
 </pre>
 </div>
 
@@ -13022,13 +13045,13 @@ sample estimates:
 	Welch Two Sample t-test
 
 data:  logpricegroupedbyaspirationsturbo$normalized_logprice and auto.price$normalized_logprice
-t = 2.8933, df = 4.4547, p-value = 0.03905
+t = 3.7573, df = 60.352, p-value = 0.0003893
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- 0.07039833 1.73925834
+ 0.2538966 0.8318539
 sample estimates:
    mean of x    mean of y 
-9.048283e-01 8.989748e-16 
+5.428753e-01 8.989748e-16 
 </pre>
 </div>
 
@@ -13043,33 +13066,66 @@ sample estimates:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Stratify-Data-For-ANOVA">Stratify Data For ANOVA<a class="anchor-link" href="#Stratify-Data-For-ANOVA">&#182;</a></h2>
+<h2 id="KS-Test-:-Test-the-impact-of-fuel-type,-drive-wheel-and-aspiration-on-price-data.">KS-Test : Test the impact of fuel type, drive wheel and aspiration on price data.<a class="anchor-link" href="#KS-Test-:-Test-the-impact-of-fuel-type,-drive-wheel-and-aspiration-on-price-data.">&#182;</a></h2><ul>
+<li>I am now using KS Test to gauge the impact on price data.</li>
+<li>Gas vehicles have P-value of 1 and D of 0.025788, this very high P value and low D value would force us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong>. In other words a great majority of gas automobiles match the average price of an automobile from the dataframe.</li>
+<li>Diesel vehicles have P-value of 0.3142 and D of 0.22654, this combination of P and D value would still compel us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong> and infer that a small number of diesel automobiles match the average price of an automobile from the dataframe.
+<pre><code> ** One can clearly infer that Diesel automobiles are priced way differently than Gas automobiles.</code></pre>
+</li>
+<li>4WD vehicles have P-value of 0.4908 and D of 0.30064, this combination of P and D value would compel us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong> and infer that a fair number of 4WD automobiles match the average price of an automobile from the dataframe.</li>
+<li>FWD vehicles have a P-value of  0.0001639 and D of 0.25433, this extremely low P value would force us to <strong><span style="color:red" >reject the null hypothesis&lt;/span&gt;</strong> and infer that average price of FWD does not match the average price of the car from the data frame.</li>
+<li>RWD vehicles have P-value of 5.597e-09 and D of 0.43496, this extremely low P value would force us to <strong><span style="color:red" >reject the null hypothesis&lt;/span&gt;</strong> and infer that average price of RWD does not match the average price of the car from the data frame.
+<pre><code> **RWD cars are priced way differently when compared to 4WD and FWD cars.</code></pre>
+</li>
+<li>Standard vehicles have P-value of 0.7067 and D of 0.075085, this extremely value of D value would force us to <strong><span style="color:red" >accept the null hypothesis&lt;/span&gt;</strong> and infer that standard automobiles match the average price of an automobile from the dataframe.</li>
+<li>Turbo vehicles have P-value of 0.002501 and D of 0.33162, this extremely low P value would force us to <strong><span style="color:red" >reject the null hypothesis&lt;/span&gt;</strong> and infer that there is average price of Turbo does not match the average price of the car from the data frame.
+<pre><code> **Turbo cars are priced way differently than standard cars.</code></pre>
+</li>
+</ul>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[127]:</div>
+<div class="prompt input_prompt">In&nbsp;[140]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">#Group By number of doors</span>
-stratified_pricedoors <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>num.of.doors<span class="p">)</span> <span class="o">%&gt;%</span> filter<span class="p">(</span>num.of.doors <span class="o">!=</span> <span class="s">&#39;?&#39;</span><span class="p">)</span> <span class="o">%&gt;%</span> sample_n<span class="p">(</span>n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-<span class="c1">#Group by body style</span>
-stratified_pricebody <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>body.style<span class="p">)</span> <span class="o">%&gt;%</span> sample_n<span class="p">(</span>n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[128]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>df_aov_body <span class="o">=</span> aov<span class="p">(</span>body.style <span class="o">~</span> normalized_logprice<span class="p">,</span> data <span class="o">=</span> stratified_pricebody<span class="p">)</span>
-df_aov_doors <span class="o">=</span> aov<span class="p">(</span>num.of.doors <span class="o">~</span> normalized_logprice<span class="p">,</span> data <span class="o">=</span> stratified_pricedoors<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#K-S Test</span>
+<span class="c1">#Gauge impact of fuel type on price</span>
+ks_df <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">()</span>
+ks_logpricegroupedbyfueltypegas <span class="o">&lt;-</span> ks.test<span class="p">(</span>logpricegroupedbyfueltypegas<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">)</span>
+ks_logpricegroupedbyfueltypegas
+ks_df<span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyfueltypegas<span class="o">$</span>p.value
+ks_df<span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyfueltypegas<span class="o">$</span>statistic
+ks_logpricegroupedbyfueltypediesel <span class="o">&lt;-</span> ks.test<span class="p">(</span>logpricegroupedbyfueltypediesel<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">)</span>
+ks_logpricegroupedbyfueltypediesel
+ks_df<span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyfueltypediesel<span class="o">$</span>p.value
+ks_df<span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyfueltypediesel<span class="o">$</span>statistic
+<span class="c1">#Gauge impact of drive wheel on price</span>
+ks_logpricegroupedbydrivewheel4wd <span class="o">&lt;-</span> ks.test<span class="p">(</span>logpricegroupedbydrivewheel4wd<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">)</span>
+ks_logpricegroupedbydrivewheel4wd
+ks_df<span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbydrivewheel4wd<span class="o">$</span>p.value
+ks_df<span class="p">[</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbydrivewheel4wd<span class="o">$</span>statistic
+ks_logpricegroupedbydrivewheelfwd <span class="o">&lt;-</span> ks.test<span class="p">(</span>logpricegroupedbydrivewheelfwd<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">)</span>
+ks_logpricegroupedbydrivewheelfwd
+ks_df<span class="p">[</span><span class="m">4</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbydrivewheelfwd<span class="o">$</span>p.value
+ks_df<span class="p">[</span><span class="m">4</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbydrivewheelfwd<span class="o">$</span>statistic
+ks_logpricegroupedbydrivewheelrwd <span class="o">&lt;-</span> ks.test<span class="p">(</span>logpricegroupedbydrivewheelrwd<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">)</span>
+ks_logpricegroupedbydrivewheelrwd
+ks_df<span class="p">[</span><span class="m">5</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbydrivewheelrwd<span class="o">$</span>p.value
+ks_df<span class="p">[</span><span class="m">5</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbydrivewheelrwd<span class="o">$</span>statistic
+<span class="c1">#Gauge impact of aspiration on price</span>
+ks_logpricegroupedbyaspirationstd <span class="o">&lt;-</span> ks.test<span class="p">(</span>logpricegroupedbyaspirationstd<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">)</span>
+ks_logpricegroupedbyaspirationstd
+ks_df<span class="p">[</span><span class="m">6</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyaspirationstd<span class="o">$</span>p.value
+ks_df<span class="p">[</span><span class="m">6</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyaspirationstd<span class="o">$</span>statistic
+ks_logpricegroupedbyaspirationsturbo <span class="o">&lt;-</span> ks.test<span class="p">(</span>logpricegroupedbyaspirationsturbo<span class="o">$</span>normalized_logprice<span class="p">,</span> auto.price<span class="o">$</span>normalized_logprice<span class="p">)</span>
+ks_logpricegroupedbyaspirationsturbo
+ks_df<span class="p">[</span><span class="m">7</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyaspirationsturbo<span class="o">$</span>p.value
+ks_df<span class="p">[</span><span class="m">7</span><span class="p">,</span><span class="m">2</span><span class="p">]</span> <span class="o">&lt;-</span> ks_logpricegroupedbyaspirationsturbo<span class="o">$</span>statistic
+headers <span class="o">&lt;-</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;pvalue&quot;</span><span class="p">,</span><span class="s">&quot;statistic&quot;</span><span class="p">)</span>
+<span class="kp">names</span><span class="p">(</span>ks_df<span class="p">)</span> <span class="o">&lt;-</span> headers
 </pre></div>
 
 </div>
@@ -13082,24 +13138,1273 @@ df_aov_doors <span class="o">=</span> aov<span class="p">(</span>num.of.doors <s
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Warning message in model.response(mf, &#34;numeric&#34;):
-&#34;NAs introduced by coercion&#34;</pre>
+<pre>Warning message in ks.test(logpricegroupedbyfueltypegas$normalized_logprice, auto.price$normalized_logprice):
+&#34;p-value will be approximate in the presence of ties&#34;</pre>
 </div>
 </div>
 
 <div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-Error in lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...): NA/NaN/Inf in &#39;y&#39;
-Traceback:
 
-1. aov(body.style ~ normalized_logprice, data = stratified_pricebody)
-2. eval(lmcall, parent.frame())
-3. eval(expr, envir, enclos)
-4. stats::lm(formula = body.style ~ normalized_logprice, data = stratified_pricebody, 
- .     singular.ok = TRUE)
-5. lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...)</pre>
+
+<div class="output_text output_subarea ">
+<pre>
+	Two-sample Kolmogorov-Smirnov test
+
+data:  logpricegroupedbyfueltypegas$normalized_logprice and auto.price$normalized_logprice
+D = 0.025788, p-value = 1
+alternative hypothesis: two-sided
+</pre>
 </div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in ks.test(logpricegroupedbyfueltypediesel$normalized_logprice, :
+&#34;cannot compute exact p-value with ties&#34;</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>
+	Two-sample Kolmogorov-Smirnov test
+
+data:  logpricegroupedbyfueltypediesel$normalized_logprice and auto.price$normalized_logprice
+D = 0.22564, p-value = 0.3142
+alternative hypothesis: two-sided
+</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in ks.test(logpricegroupedbydrivewheel4wd$normalized_logprice, auto.price$normalized_logprice):
+&#34;cannot compute exact p-value with ties&#34;</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>
+	Two-sample Kolmogorov-Smirnov test
+
+data:  logpricegroupedbydrivewheel4wd$normalized_logprice and auto.price$normalized_logprice
+D = 0.30064, p-value = 0.4908
+alternative hypothesis: two-sided
+</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in ks.test(logpricegroupedbydrivewheelfwd$normalized_logprice, auto.price$normalized_logprice):
+&#34;p-value will be approximate in the presence of ties&#34;</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>
+	Two-sample Kolmogorov-Smirnov test
+
+data:  logpricegroupedbydrivewheelfwd$normalized_logprice and auto.price$normalized_logprice
+D = 0.25433, p-value = 0.0001639
+alternative hypothesis: two-sided
+</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in ks.test(logpricegroupedbydrivewheelrwd$normalized_logprice, auto.price$normalized_logprice):
+&#34;p-value will be approximate in the presence of ties&#34;</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>
+	Two-sample Kolmogorov-Smirnov test
+
+data:  logpricegroupedbydrivewheelrwd$normalized_logprice and auto.price$normalized_logprice
+D = 0.43496, p-value = 5.597e-09
+alternative hypothesis: two-sided
+</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in ks.test(logpricegroupedbyaspirationstd$normalized_logprice, auto.price$normalized_logprice):
+&#34;p-value will be approximate in the presence of ties&#34;</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>
+	Two-sample Kolmogorov-Smirnov test
+
+data:  logpricegroupedbyaspirationstd$normalized_logprice and auto.price$normalized_logprice
+D = 0.075085, p-value = 0.7067
+alternative hypothesis: two-sided
+</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in ks.test(logpricegroupedbyaspirationsturbo$normalized_logprice, :
+&#34;cannot compute exact p-value with ties&#34;</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>
+	Two-sample Kolmogorov-Smirnov test
+
+data:  logpricegroupedbyaspirationsturbo$normalized_logprice and auto.price$normalized_logprice
+D = 0.33162, p-value = 0.002501
+alternative hypothesis: two-sided
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Visualize-the-relationshipt-between-P-Value-&amp;-KS-Statistics">Visualize the relationshipt between P-Value &amp; KS Statistics<a class="anchor-link" href="#Visualize-the-relationshipt-between-P-Value-&amp;-KS-Statistics">&#182;</a></h2><ul>
+<li>A higher P-value with a decreasing KS Statistics (D) clearly rejects the null hypothesis.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[141]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>ggplot<span class="p">(</span>ks_df<span class="p">,</span> aes<span class="p">(</span>ks_df<span class="o">$</span>pvalue<span class="p">,</span> ks_df<span class="o">$</span>statistic<span class="p">))</span> <span class="o">+</span> geom_line<span class="p">()</span> <span class="o">+</span> ggtitle<span class="p">(</span><span class="s">&#39;Line plot of P-value vs KS Statistics&#39;</span><span class="p">)</span> <span class="o">+</span>
+xlab<span class="p">(</span><span class="s">&#39;P-Value&#39;</span><span class="p">)</span> <span class="o">+</span> ylab<span class="p">(</span><span class="s">&#39;KS Statistics&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Stratify-Data-For-ANOVA">Stratify Data For ANOVA<a class="anchor-link" href="#Stratify-Data-For-ANOVA">&#182;</a></h2><ul>
+<li>Stratifying data as per number of doors and body style.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[142]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Group By number of doors</span>
+stratified_pricedoors <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>num.of.doors<span class="p">)</span> <span class="o">%&gt;%</span> filter<span class="p">(</span>num.of.doors <span class="o">!=</span> <span class="s">&#39;?&#39;</span><span class="p">)</span>
+<span class="c1">#Group by body style</span>
+stratified_pricebody <span class="o">=</span> auto.price <span class="o">%&gt;%</span> group_by<span class="p">(</span>body.style<span class="p">)</span> <span class="o">%&gt;%</span> sample_n<span class="p">(</span>n<span class="p">,</span> replace <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Visually-show-the-relationship-of-price-based-on-number-of-doors-to-the-average-price-and-body-style-to-the-average-price.">Visually show the relationship of price based on number of doors to the average price and body style to the average price.<a class="anchor-link" href="#Visually-show-the-relationship-of-price-based-on-number-of-doors-to-the-average-price-and-body-style-to-the-average-price.">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[143]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Boxplot number of doors</span>
+stratified_pricedoors<span class="o">$</span>num.of.doors <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>stratified_pricedoors<span class="o">$</span>num.of.doors<span class="p">)</span> <span class="c1"># Make sure your groups are a factor</span>
+boxplot<span class="p">(</span>stratified_pricedoors<span class="o">$</span>normalized_logprice <span class="o">~</span> stratified_pricedoors<span class="o">$</span>num.of.doors<span class="p">)</span>
+<span class="c1">#Boxplot body style</span>
+stratified_pricebody<span class="o">$</span>body.style <span class="o">=</span> <span class="kp">factor</span><span class="p">(</span>stratified_pricebody<span class="o">$</span>body.style<span class="p">)</span> <span class="c1"># Make sure your groups are a factor (for further analysis below)</span>
+boxplot<span class="p">(</span>stratified_pricebody<span class="o">$</span>normalized_logprice <span class="o">~</span> stratified_pricebody<span class="o">$</span>body.style<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAAAMFBMVEUAAABNTU1oaGh8fHyM
+jIyampqnp6eysrK9vb3Hx8fQ0NDZ2dnh4eHp6enw8PD////QFLu4AAAACXBIWXMAABJ0AAAS
+dAHeZh94AAAU9UlEQVR4nO3d2XZcx7FF0QLYmu3//+0FQVCGbF9b1A6gYmfN+SBBGiNYcTJr
+CQ1l6/IdiF2uvQCcQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgw
+QEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgw
+QEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgw
+QEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgw
+QEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgw
+QEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgwQEgw4BVCukCZv/Eunw/nCi8Bk4QEA4QEA4QE
+A4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QEA4QE
+A4TEoGv/f2Jd740jJBbpvXghsUjvxQuJRXovXkgs0nvxQoIBQoIBQoIBQmKR3osXEov0XryQ
+WKT34oXEIr0XLyQW6b14IcEAIcEAIcEAIbFI78ULiUV6L15ILNJ78UJikd6LFxKL9F68kGCA
+kGCAkGCAkFik9+KFxCK9Fy8kFum9eCH9+YWv7VoPvkTv8wtpVO3iS/Sen5BG1S5OSEijahcn
+JKRRtYsTEhKL9F68kFik9+KFxCK9Fy+kUbWLL9F7fkIaVbv4Er3nJ6RRtYsTEtKo2sUJCWlU
+7eKEhMQivRcvJBbpvXghsUjvxQtpVO3iS/Sen5BG1S6+RO/5CWlU7eKEhDSqdnFCQhpVuzgh
+IbFI78ULiUV6L15ILNJ78UIaVbv4Er3nJ6RRtYsv0Xt+QhpVuzghIY2qXZyQkEbVLk5ISCzS
+e/FCYpHeixcSi/RevJBG1S6+RO/5CWlU7eJL9J6fkEbVLk5ISKNqFyckpFG1ixMSEov0XryQ
+WKT34oXEIr0XL6RRtYsv0Xt+QhpVu/gSvecnpFG1ixMS0qjaxQkJaVTt4oSExCK9Fy8kFum9
+eCGxSO/FC2lU7eJL9J6fkEbVLr5E7/kJaVTt4oSENKp2cUJCGlW7OCEhsUjvxQuJRXovXkgs
+0nvxQhpVu/gSvecnpFG1iy/Re35CGlW7OCEhjapdnJCQRtUuTkhILNJ78a8Z0rd3l8ubT0+/
+yH/9VXrPk0jvxb9iSN/uLj+8/fmLCIl/13vxrxjS+8vHh5o+3r15/EXODKl28SV6z+8VQ7r7
+Ofj17v6rkPiPes/vFUP61c63N2/+U0iX5/7mS1xd7eKEXjGk+8u3Xx+98RmJs7xiSB8v754+
++np5IySO8po//n7/Rz2f/sdXb96PN6r34l/1N2S/vP310dd3QuLf9V68f7OBRXovXkijahdf
+ovf8hDSqdvEles9PSKNqFyckpFG1ixMS0qjaxQkJiUV6L15ILNJ78UJikd6LF9Ko2sWX6D0/
+IY2qXXyJ3vMT0qjaxQkJaVTt4oSENKp2cUJCYpHeixcSi/RevJBYpPfihTSqdvEles9PSKNq
+F1+i9/yENKp2cUJCGlW7OCEhjapdnJCQWKT34oXEIr0XLyQW6b14IY2qXXyJ3vMT0qjaxZfo
+PT8hjapdnJCQRtUuTkhIo2oXJyQkFum9eCGxSO/FC4lFei9eSKNqF1+i9/yENKp28SV6z09I
+o2oXJySkUbWLExLSqNrFCQmJRXovXkgs0nvxQmKR3osX0qjaxZfoPT8hjapdfIne8xPSqNrF
+CQlpVO3ihIQ0qnZxQkJikd6LFxKL9F68kFik9+KFNKp28SV6z09Io2oXX6L3/IQ0qnZxQkIa
+Vbs4ISGNql2ckJBYpPfihcQivRcvJBbpvXghjapdfIne8xPSqNrFl+g9PyGNql2ckJBG1S5O
+SEijahcnJCQW6b14IbFI78ULiUV6L15Io2oXX6L3/IQ0qnbxJXrPT0ijahcnJKRRtYsTEtKo
+2sUJCYlFei9eSCzSe/FCYpHeixfSqNrFl+g9PyGNql18id7zE9Ko2sUJCWlU7eKEhDSqdnFC
+QmKR3osXEov0XryQWKT34oU0qnbxJXrPT0ijahdfovf8hDSqdnFCQhpVuzghIY2qXZyQkFik
+9+KFxCK9Fy8kFum9eCGNql18id7zE9Ko2sWX6D0/IY2qXZyQkEbVLk5ISKNqFyckJBbpvXgh
+sUjvxQuJRXovXkijahdfovf8hDSqdvEles9PSKNqFyckpFG1ixMS0qjaxQkJiUV6L15ILNJ7
+8UJikd6LF9Ko2sWX6D0/IY2qXXyJ3vMT0qjaxQkJaVTt4oSENKp2cUJCYpHeixcSi/RevJBY
+pPfihTSqdvEles9PSKNqF1+i9/yENKp2cUJCGlW7OCEhjapdnJCQWKT34oXEIr0XLyQW6b14
+IY2qXXyJ3vMT0qjaxZfoPT8hjapdnJCQRtUuTkhIo2oXJyQkFum9eCGxSO/Fv2JIlz97iZeg
+XO/Fv2JIH/97SH+5ss1qF1+i9/xe80u7L3dvXvolrq128SV6z+9Vv0f6cnn/0i9xZbWLE3rd
+HzZ8vHx56Ze4rtrFCfmp3ajaxQkJiUV6L15ILNJ78UJikd6LF9Ko2sWX6D0/IY2qXXyJ3vMT
+0qjaxQkJaVTt4oSENKp2cUJCYpHeixcSi/RevJBYpPfihTSqdvEles9PSKNqF1+i9/yENKp2
+cUJCGlW7OCEhjapdnJCQWKT34oXEIr0XLyQW6b14IY2qXXyJ3vMT0qjaxZfoPT8hjapdnJCQ
+RtUuTkhIo2oXJyQkFum9eCGxSO/FC4lFei/+sJAut27yFq6gd//TQprcolD78/fuL6Sj3Prz
+X4+QjnLrz389QjrKrT//9QjpKO3P37u/kI7S/vy9+wvpKO3P37u/kI7S/vy9+wvpKO3P37u/
+kI5y689/PUI6yq0///UI6Si3/vzXI6SjtD9/7/5COkr78/fuL6SjpM9/7f8VyNW95skLaa84
+pJEtegkpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R08BBCyggpHTyEkDJCSgcPIaSMkNLBQwgpI6R0
+8BBCyggpHTyEkDIlIX3+8Pbyw9v3n1/oJbwRrjvfriKkb/eXf3rzIi/hjXDl+XYVIb2/3P3j
+y+NHXz/dXd6/xEt4I1x5vl1FSHeXL398/OVy9xIv4Y1w5fl2FSFdLv/fXzz9nWf+5kt4I1x5
+vl1FSD4jvTwhZSpCevge6dPXx498j/RShJSpCOn7m2dfu91/e5GX8Ea47ny7jpC+f37/+PtI
+d28/vNjvI926v3tw6cEfoiSkl3+Ja7+Pr+5aB38IIf0avHXXOvhDCCkdPISQMkJKBw8hpIyQ
+0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ
+0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ
+0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ
+0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ
+0sFDCCkjpHTwEELKCCkdPISQMkJKBw8hpIyQ0sFDCCkjpHTwEELKCCkdPISQMkJKBw8Rh3Tr
+XvPkhbSXkEKvefJC2ktIodc8eSHt5XukjJDSwUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDS
+wUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDSwUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDS
+wUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDSwUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDS
+wUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDSwUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDS
+wUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDSwUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDS
+wUMIKSOkdPAQQsoIKR08hJAyQkoHDyGkjJDSwUMIKSOkdPAQQsoIKR08hJAyQvo1eOuudfCH
+ENIStYs/ad8/JaQlahd/0r5/SkiMuPWDFxIjbv3ghcSIWz94IS1Ru/iT9v1TQlqidvEn7fun
+hLRE7eJP2vdPCWmJ2sWftO+fEtIStYs/ad8/JSRG3PrBC4kRt37wQmLErR+8kJaoXfxJ+/4p
+IS1Ru/iT9v1TQlqidvEn7funhLRE7eJP2vdPCWmJ2sWftO+fEhIjbv3ghcSIWz94ITHi1g9e
+SEvULv6kff+UkJaoXfxJ+/4pIS1Ru/iT9v1TQlqidvEn7funhLRE7eJP2vdPCYkRt37wQmLE
+rR+8kBhx6wcvpCVqF3/Svn9KSEvULv6kff+UkJaoXfxJ+/6pipB+4z+JVXuftYs/ucp/HG2T
+v39yrzLy6ONfX7n2/Vi7+BK95/eaX9p9uXvz0i9Bt96Lf9Xvkb5c3r/0S1Ct9+Jf94cNHy9f
+XvolaNZ78Xt+ajfzPd+V1S5OaE9Ir/wSL6N2cUJCGlW7OKFrhPS/v3KrfT/WLr5E7/kJaVTt
+4kv0np+QWKT34oXEIr0XLyQW6b14IY2qXZyQH3+Pql2ckJBG1S5OSEijahdfovf8hDSqdvEl
+es9PSCzSe/FCYpHeixcSi/RevJBG1S5OSEijahcnJKRRtYsTEtKo2sWX6D0/IY2qXXyJ3vMT
+Eov0XryQWKT34oXEIr0XL6RRtYsTEtKo2sUJCWlU7eKEhDSqdvEles9PSH9+4Wu71oMv0fv8
+QmKR3osXEov0XryQWKT34oUEA4QEA4QEA4TEIr0XLyQW6b14IbFI78ULiUV6L15ILNJ78UKC
+AUKCAUKCAUJikd6LFxKL9F68kFik9+KFxCK9Fy8kFum9eCHBACHBACHBACGxSO/FC4lFei9e
+SCzSe/FCYpHeixcSi/RevJBggJBggJBggJBYpPfihcQivRcvJBbpvXghsUjvxQuJRXovXkgw
+QEgwQEgwQEgs0nvxQmKR3osXEov0XryQWKT34oXEIr0XLyQYICQYICQYICQW6b14IbFI78UL
+iUV6L15ILNJ78UJi0OXarvfkrzKy8CVgkpBggJBggJBggJBggJBggJBggJBggJBggJBggJBg
+gJBggJBggJBggJBggJBggJBggJBggJBggJBggJBggJBgwNKQoMzfeJfPh3MMZ5O5qfO7qYf9
+Tc4mc1Pnd1MP+5ucTeamzu+mHvY3OZvMTZ3fTT3sb3I2mZs6v5t62N/kbDI3dX439bC/ydlk
+bur8buphf5OzydzU+d3Uw/4mZ5O5qfO7qYf9Tc4mc1Pnd1MP+5ucTeamzu+mHvY3OZvMTZ3f
+TT0svBQhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhwQAhPfPt
+3eXy/tpLNPt07QWuR0jPvL1cLh+uvUSx+xt+N93wo/+7y+XrtVeo9nf+cyinuOFH/3e3/EaY
+cMvnd8OP/q/++E9Mfby/3H/8+Xd+/fFy+XZ/eXvV9fZ7PL/Pl3c/Pv50efx+6d3l87PzPJmQ
+/vArpDePf37z/c8hvfVziP/l5/ndPR7au5+ndbl7fp4nE9Izj+H843L35fuXu8s//hzSm29X
+Xq7A43l9+HFyDx8+JPRwlh+en+fJhPTM4xvh7eMXJZ9+/CP0eUifr7tahcfz+vrj5D4/fAb/
+8uOT0dfn53kyIT3z+EZ4+o75Zz5//oj/7ucpvbl8+/7+8uXhk9HXf/7T6PgTPPzxfo+QMj9P
+6dNDQnf33+/vf36VJ6TbI6TMr6O7/3x5//BJ6dv9w+cmId2gP32P9Pbprz8L6a96OqX3l3cP
+Z/jp4Y8/fhL+7DxP5g3yzL/+1O7+8vH7tzdC+que/s2Qh3/0/PxU9JiQn9rdnl/fLP/6fY+P
+Pz54K6S/6v7nD70f/nz//cc5Pv6F30e6PU+5fLz79TvxH+4evjoR0l/1+f5nOx8efzf2w6/f
+wf7neR7MGwQGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkG
+CAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkG
+CAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkG
+CAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkG
+CAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkGCAkG/B8LXtAJ3LnbDQAAAABJRU5ErkJggg=="
+>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAAAMFBMVEUAAABNTU1oaGh8fHyM
+jIyampqnp6eysrK9vb3Hx8fQ0NDZ2dnh4eHp6enw8PD////QFLu4AAAACXBIWXMAABJ0AAAS
+dAHeZh94AAAbgUlEQVR4nO3djVbbyLKAUfMTwhAS3v9tD9jQWCQ5gXJJ1a3ee62byyRyl1rS
+lxjImTk8ARc7VJ8A7IGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQ
+IIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQ
+IIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQ
+IIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQ
+IIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQ
+IIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIIGQIMEGIR1gMIGnPD+cghGQSUiQQEiQQEiQ
+QEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQQEiQ
+QEhr2OZf50RHhLSp3W5sekLa1G43Nj0hbWq3G5uekDa1241NT0iQQEiQQEiQQEib2u3Gpiek
+Te12Y9MT0qZ2u7HpCWlTu93Y9IS0qd1ubHpCggRCggRCggRC2tRuNzY9IW1qtxubnpA2tduN
+TU9Im9rtxqYnpE3tdmPTExIkEBIkEBIkENKmdrux6QlpU7vd2PSEtKndbmx6QtrUbjc2PSFt
+arcbm56QIIGQIIGQIIGQNrXbjU1PSJva7camJ6RN7XZj0xPSpna7sekJaVO73dj0hAQJhAQJ
+hAQJhLSp3W5sekLa1G43Nj0hbWq3G5uekDa1241NT0ib2u3GpickSCAkSCAkSCCkTe12Y9MT
+0qZ2u7HpCWlTu93Y9IS0qd1ubHpC2tRuNzY9IUECIUECIUECIW1qtxubnpA2tduNTU9Im9rt
+xqYnpE3tdmPTE9Kmdrux6QkJEggJEgiJ7RwOu72zQtrUbjf2GceK9pqSkDa12419xuHsx90R
+0qZ2u7FPOHz4//syV0jl79H3+RB9jpAuf0kfIzp4j77Ph+hzhHT5S/oYsev36APY9fWfKKR9
+/444gA7eEaxHSGyn/HPU9QhpU7t9jqY3UUg9vEcX0l5NFVL9e3Qh7dVMIXXwHl1IezVXSOV2
+u7HpCQkSCAkSCCnusJHqffIJQorb6CzHuBizE1KckGiEFCckGiHFCYlGSHFCohFSnJBohBQn
+JBohxQmJRkhxQqIRUpyQaIQUJyQaIcUJiUZIcUKi2TKkX98Oh5uH10X+7ypjPDtCotkwpF9X
+x/9RwO1pESF1NoaLbBjS3eH+uab7q5vjIkLqbAwX2TCkq9MLf15d/xRSf2O4yIYhvbXz6+bm
+TyGN9z8KFRLNhiFdH369fXTjT6TuxnCRDUO6P3x7/ejn4UZIvY3hIlt++fuu1fPwj3dvYzw7
+QqLZ9Buyj7dvH/38JqTOxnARf7MhTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOk
+OCHRCClOSDRCihMSjZDihEQjpDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKE
+RCOkOCHRCClOSDRCihMSjZDihEQjpDgh0QgpTkijWfE/zyCkOCGN5VjRWikJKU5IYzmc/bjS
+4mu/pMMRCYQ0lMOH/7/O6uu+pMMRCYQ0FCH1SkhDEVKvhDQWnyN1Skhj8VW7TglpNL6P1CUh
+0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOkOCHRCClOSDRCihMSjZDihEQj
+pDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOkOCHRCClOSDRCihMSjZDi
+hEQjpDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOkOCHRCClOSDRCihMS
+jZDihEQjpDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOkOCHRCClOSDRC
+ihMSjZDihEQjpDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOkOCHRCClO
+SDRCihMSjZDihEQjpDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOkOCHR
+CClOSDRCihMSjZDihEQjpDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKERCOk
+OCHRCClOSDRCihMSjZDihEQjpDgh0QgpTkg0QooTEo2Q4oREI6Q4IdEIKU5INEKKExKNkOKE
+RCOkOCHRCCmu35AOAfknPhUhxfUb0iZrcU5IcUKiEVKckGiEFCckGiHFDRgSaxFSnJBoNgzp
+C19uHePZERLNhiHd//+QxvumxoAhjXFhR7TlW7vHq5u1R2xKSDSbfo70eLhbe8SWhESz7Rcb
+7g+Pa4/YkJBofNUuTkg0QoobMCTWIqQ4IdEIKU5INEKKGzCkMS7siIQUJyQaIcUJiUZIcUKi
+EVKckGiEFDdgSKxFSHFCohFSnJBohBQ3YEhjXNgRCSlOSDRCihMSjZDihEQjpDgh0QgpbsCQ
+WMvIIUX+mwsRl53lxYQ0gqFDWvks/jWmej4dEVJ8TPX84rU4J6T4mOr5xWtxTkjxMdXzi9fi
+nJDiY6rnF6/FOSHFx1TPL16Lc0KKj6meT0eEFB9TPZ+OCCk+pno+HRFSfEz1/OK1OCek+Jjq
++cVrcU5I8THV84vXKv+7jl0RUnxM9fzitUbc/3qEFB9TPb94rRH3vx4hxcdUz6/mrd0ZIcXH
+VM+vJqQzQ4dUfCOFVHv9uyKk+I0cMCSfI61FSELqYrHyMRcaOqSVz+JfY6rnF6814v7XI6T4
+mOr5xWuNuP/1CCk+pnp+8Voj7n89QoqPqZ5fbfb9LwgpPqZ6frXZ978gpPiY6vnVZt//gpDi
+Y6rnF6814v7XI6T4mOr5xWuNuP/1CCk+pnp+8Voj7n89QoqPqZ5fvNaI+1+PkOJjqucXrzXi
+/tcjpPiY6vnVZt//gpDiY6rnV5t9/wtCio+pnl9t9v0vCCk+pnp+8Voj7n89QoqPqZ5fvNaI
++1+PkOJjqucXrzXi/tcjpPiY6vnFa424//UIKT6men7xWiPufz1Cio+pnl9t9v0vCCk+pnp+
+tdn3vyCk+Jjq+dVm3/+CkOJjqucXrzXi/tcjpPiY6vnFa424//UIKT6men7xWiPufz1Cio+p
+nl+81oj7X4+Q4mOq5xevNeL+1yOk+Jjq+dVm3/+CkOJjqudXm33/C0KKj6meX232/S8IKT6m
+en7xWiPufz1Cio+pnl+81oj7X4+Q4mOq5xevNeL+1yOk+Jjq+cVrjbj/9QgpPqZ6fvFaI+5/
+PUKKj6meX232/S8IKT6men612fe/IKT4mOr51Wbf/4KQ4mOq5xevNeL+1yOk+Jjq+cVrjbj/
+9QgpPqZ6fvFaI+5/PUKKj6meX7zWiPtfj5DiY6rnF6814v7XI6T4mOr51Wbf/4KQ4mOq51eb
+ff8LQoqPqZ5fbfb9LwgpPqZ6fvFaI+5/PUKKj6meX7zWiPtfj5DiY6rnF6814v7XI6T4mOr5
+xWuNuP/1CCk+pnp+8Voj7n89QoqPqZ5fbfb9LwgpPqZ6frXZ978wdEgbuewsL9btgzT7/hdG
+Dql64QEfpNn3vx4hdbLYNmNm3/96Jgsp1YAPkpDWIqS4AR8kIa1FSHEDPkhCWstkIXmQEs2+
+/wUhdbJY+Zivm33/C0LqZLHyMV83+/4XhNTJYtuMmX3/6xFSJ4ttM2b2/a9nspBSDfggCWkt
+Qoob8EES0lqEFDfggySktUwWkgcp0ez7XxBSJ4uVj/m62fe/IKROFisf83Wz739BSJ0sts2Y
+2fe/HiF1stg2Y2bf/3omCynVgA+SkNYipLgBHyQhrUVIcQM+SEJay2QheZASzb7/BSF1slj5
+mK+r3n/1v47tc2eZ+pJuRggpUfX+q+cHjrr0Jd2MmD2kXe2/en7gqEtf0s2IXT1IxWuV7796
+fuCoS1/S4YgEXd3I7dcq33/1/MBRl76kwxEJurqR269Vvv/q+YGjLn1JhyMSdHUjt1+rfP/V
+8wNHXfqSbkbs6kGqVr3/6vmBoy59STcjhJSoev/V8wNHXfqSbkYIKVH1/qvnB4669CXdjJg9
+pF3tv3p+4KhLX9LNiF09SMVrle+/en7gqEtf0uGIBF3dyO3XKt9/9fzAUZe+pMMRCbq6kduv
+Vb7/6vmBoy59SYcjEnR1I7dfq3z/1fMDR136km5G7OpBqla9/+r5gaMufUk3I4SUqHr/8/7v
+kX58vz2e2e3dj7VG/IOQElXvf9aQfl2fndzNKiP+afaQdrX/WUO6O1z993j86OfD1eFujRHt
+9WtdrtSzLBizr5CK5weOuvQlR1eHx/bx4+FqjRHb6upGbr9W+f6r5weOuvQlp9cd/vYPrz9z
+0R8PBbq6kduvVb7/6vmBoy59yZE/kerHCClxfuCoS19y9Pw50sPP40erf460ja5uZIHq/VfP
+Dxx16UtObs7eu13/WmXEprq6kQWq9189P3DUpS959ePu+H2kq9vvVd9HStXVjSxQvf/q+YGj
+Ln1JhyMSdHUjt1+rfP/V8wNHXfqSDkckiH+Lb+3vcP39lBPXKn+Qq+cHjrr0JR2OSCCkTQgp
+TkhC+veY6vmBoy59SYcjEnR1I7dfq3z/1fMDR136kg5HJOjqRhao3n/1/MBRl76kwxEJqm9k
+9VvL8v0Xzw8cdelLOhyRoPpGml87P3DUpS/pcESC6htpfu38wFGXvqTDEQmqb6T5tfMDR136
+kg5HJKi+kebXzg8cdelLOhyRoPpGml87P3DUpS/pcESC6htpfu38wFGXvqTDEQmqb6T5tfMD
+R136kg5HJKi+kebXzg8cdelLOhyRoPpGls+f/BvCgaMufUmHIxJU38jq+cVr9bV/IcVV38jq
++dW62r+Q4qpvZPX8al3tX0hx1Teyen61rvYvpLjqG1k9v3itvvYvpLjqG1k9v3itvvYvpLjq
+G1k9v3itvvYvpLjqG1k9v3itvvYvpLjqG1k9v3itvvYvpLjqG1k9v1pX+xdSXPWNrJ5frav9
+Cymu+kZWz6/W1f6FFFd9I6vnF6/V1/6FFFd9I6vnF6/V1/6FFFd9I6vnF6/V1/6FFFd9I6vn
+F6/V1/6FFFd9I6vnF6/V1/6FFFd9I6vnV+tq/0KKq76R1fOrdbV/IcVV38jq+dW62r+Q4qpv
+ZPX84rX62r+Q4qpvZPX84rX62r+Q4qpvZPX84rX62r+Q4qpvZPX84rX62r+Q4qpvZPX84rX6
+2r+Q4qpvZPX8al3tX0hx1Teyen61rvYvpLjqG1k9v1pX+xdSXPWNrJ5fvFZf+xdSXPWNrJ5f
+vFZf+xdSXPWNrJ5fvFZf+xdSXPWNrJ5fvFZf+xdSXPWNrJ5fvFZf+xdSXPWNrJ5frav9Cymu
++kZWz6/W1f6FFFd9I6vnV+tq/0KKq76R1fOL1+pr/0KKq76R1fOL1+pr/0KKq76R1fOL1+pr
+/0KKq76R1fOL1+pr/0KKq76R1fOL1+pr/0KKq76R1fOrdbV/IcVV38jq+dW62r+Q4qpvZPX8
+al3tX0hx1Teyen7xWn3tX0hx1Teyen7xWn3tX0hx1Teyen7xWn3tX0hx1Teyen7xWn3tX0hx
+1Teyen7xWn3tX0hx1Teyen61w0Y+dzKB8//6SzockaD6Qa6ezxkhxVU/yNXzOSOkuOoHuXp+
+8Vp9EVJc9YNcPb94rb4IKa76Qa6eX7xWX4QUV/0gV88vXqsvQoqrfpCr5xev1RchxVU/yNXz
+OSOkuOoHuXo+Z4QUV/0gV8/njJDiqh/k6vnFa/VFSHHVD3L1/OK1+iKkuOoHuXp+8Vp9EVJc
+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
+E0L66Oa3z5FuF9fm7nB//ILD7fvXDv4Q0o+nxedI0b/C8+FxXdy+06o/3m/d4nxPJ/AteejN
++Wc+f97s6/HLI78fP1W/0IdL+XH/64V0d/h2/OrSt+P1PBv2h8+RboX06v7lay53v33V7uWX
+3i7hoX3R7Pno27OQ3r5t8vaFrIfTP54d+kXLx/Vx8c784fyrVj+f/vhVu1DAfxn6c3Fxzg86
+22w7/sOR1xd9Nfj69IWy68WlXOz/w8XJfYp/nG754fQ1j7Nhf/uqXf4pfEpfIf3l+0hP7cfr
+1y9BnX719Mb96fQLb78BH7+3cDiGc/YW/urnn8b9X+9z714/N/jxfotu2zcxTpMX53vzdgJf
+98eh5yPad4c+bvbs+A9HPp5+9wn678Oyp0v5vv/fLk7yU3x8V/k8+vjH6m+bPJzd448Py6Y6
+C+n4NaLXv9lw9f43BdqP/739Pn///HB9e//e/dOP6/eQ2t8NOP1aO/SLzuY+PzE3P87eOjwd
+PwU/fVv9NHl5vrevHyYNfRvxdnEW7//eNnt2/McjvwerPjn+zYbTV/7OLmXb/28XJ/kp/n78
+9uvpxw+bvHr++PUe/+lh2VRvIe1AwV2c2IXfJUvjpqcT0iaOX4z8dXsI/qXGbG56OiFt4vWv
+3SV8RTKFm55OSNu4f/7c7bqTP4+EBCmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmE
+BAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmE
+BAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmE
+BAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmE
+BAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAmEBAn+B2aCU9SEGFnDAAAAAElFTkSuQmCC"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Anova-analysis-based-on-number-of-doors-&amp;-Body-Style.">Anova analysis based on number of doors &amp; Body Style.<a class="anchor-link" href="#Anova-analysis-based-on-number-of-doors-&amp;-Body-Style.">&#182;</a></h2><ul>
+<li>In the door analysis we have two groups of two and four doors, you can see a low F value and P-value of 0.129. P-value is greater than 0.05 and this would lead us to <strong>accept the null hypothesis</strong>. Tukey HSD will provide a stronger (i.e. Honest) answer.</li>
+<li>In the body style analysis there are 5 groups and we can see a higher F value with a an extremely low P-value, this by itself is enough to <strong>reject the hypothesis</strong>. Tukey HSD will provide a stronger answer.</li>
+<li>Power of Anova analysis is felt while analysing body style as it has 5(more than 2) groups.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[144]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Anova analysis for number of doors group</span>
+df_aov_door <span class="o">=</span> aov<span class="p">(</span>stratified_pricedoors<span class="o">$</span>normalized_logprice <span class="o">~</span> stratified_pricedoors<span class="o">$</span>num.of.doors<span class="p">,</span> data <span class="o">=</span> stratified_pricedoors<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>df_aov_door<span class="p">)</span>
+<span class="c1">#Anova analysis for body style group</span>
+df_aov_body <span class="o">=</span> aov<span class="p">(</span>stratified_pricebody<span class="o">$</span>normalized_logprice <span class="o">~</span> stratified_pricebody<span class="o">$</span>body.style<span class="p">,</span> data <span class="o">=</span> stratified_pricebody<span class="p">)</span>
+<span class="kp">summary</span><span class="p">(</span>df_aov_body<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>                                    Df Sum Sq Mean Sq F value Pr(&gt;F)
+stratified_pricedoors$num.of.doors   1   2.33   2.334   2.331  0.129
+Residuals                          191 191.31   1.002               </pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>                                Df Sum Sq Mean Sq F value Pr(&gt;F)
+stratified_pricebody$body.style  4  5.464   1.366   1.069  0.398
+Residuals                       20 25.569   1.278               </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Tukey-Analysis-on-number-of-doors-&amp;-body-style.">Tukey Analysis on number of doors &amp; body style.<a class="anchor-link" href="#Tukey-Analysis-on-number-of-doors-&amp;-body-style.">&#182;</a></h2><ul>
+<li>In number of doors you can see 1 difference between 2 &amp; 4 doors with a a low p-adj with a negative difference.</li>
+<li>In body style you see 10 differences between 5 groups and in this mix you can clearly see a low P-adj and significant difference in hatchback-convertible,hatchback-hardtop,sedan-hardtop &amp; wagon-hardtop.</li>
+<li>One can also see so almost no difference in hardtop-convertible &amp; wagon-sedan.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[145]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Tukey Analysis for door</span>
+tukey_anova_door <span class="o">=</span> TukeyHSD<span class="p">(</span>df_aov_door<span class="p">)</span>  <span class="c1"># Tukey&#39;s Range test:</span>
+tukey_anova_door
+<span class="c1">#Tukey Analysis for body style</span>
+tukey_anova_body <span class="o">=</span> TukeyHSD<span class="p">(</span>df_aov_body<span class="p">)</span>  <span class="c1"># Tukey&#39;s Range test:</span>
+tukey_anova_body
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = stratified_pricedoors$normalized_logprice ~ stratified_pricedoors$num.of.doors, data = stratified_pricedoors)
+
+$`stratified_pricedoors$num.of.doors`
+               diff        lwr        upr    p adj
+two-four -0.2228515 -0.5107836 0.06508059 0.128507
+</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = stratified_pricebody$normalized_logprice ~ stratified_pricebody$body.style, data = stratified_pricebody)
+
+$`stratified_pricebody$body.style`
+                            diff       lwr       upr     p adj
+hardtop-convertible   -0.1109500 -2.250821 2.0289209 0.9998575
+hatchback-convertible -1.2948831 -3.434754 0.8449877 0.3950779
+sedan-convertible     -0.2714195 -2.411290 1.8684514 0.9952250
+wagon-convertible     -0.6236817 -2.763553 1.5161892 0.9037441
+hatchback-hardtop     -1.1839332 -3.323804 0.9559377 0.4816267
+sedan-hardtop         -0.1604695 -2.300340 1.9794014 0.9993856
+wagon-hardtop         -0.5127318 -2.652603 1.6271391 0.9501086
+sedan-hatchback        1.0234637 -1.116407 3.1633345 0.6158101
+wagon-hatchback        0.6712014 -1.468669 2.8110723 0.8784215
+wagon-sedan           -0.3522623 -2.492133 1.7876086 0.9871607
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Plot-Tukey-Analysis-to-visually-confirm-the-above-analysis.">Plot Tukey Analysis to visually confirm the above analysis.<a class="anchor-link" href="#Plot-Tukey-Analysis-to-visually-confirm-the-above-analysis.">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[146]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Plot Tukey door</span>
+plot<span class="p">(</span>tukey_anova_door<span class="p">)</span>
+<span class="c1">#Plot Tukey Body Style</span>
+plot<span class="p">(</span>tukey_anova_body<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+O6iLjX0AAAAASUVORK5CYII="
+>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+f+wgKbHLDRG6AAAAAElFTkSuQmCC"
+>
+</div>
+
 </div>
 
 </div>

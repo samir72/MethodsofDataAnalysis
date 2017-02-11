@@ -144,12 +144,30 @@ stratified_pricedoors = auto.price %>% group_by(num.of.doors) %>% filter(num.of.
 #Group by body style
 stratified_pricebody = auto.price %>% group_by(body.style) %>% sample_n(n, replace = FALSE)
 
-#stratified_pricedoors$num.of.doors = factor(stratified_pricedoors$num.of.doors) # Make sure your groups are a factor (for further analysis below)
+#Boxplot number of doors
+stratified_pricedoors$num.of.doors = factor(stratified_pricedoors$num.of.doors) # Make sure your groups are a factor
 boxplot(stratified_pricedoors$normalized_logprice ~ stratified_pricedoors$num.of.doors)
+#Boxplot body style
+stratified_pricebody$body.style = factor(stratified_pricebody$body.style) # Make sure your groups are a factor (for further analysis below)
+boxplot(stratified_pricebody$normalized_logprice ~ stratified_pricebody$body.style)
 
+#Anova analysis for number of doors group
 df_aov_door = aov(stratified_pricedoors$normalized_logprice ~ stratified_pricedoors$num.of.doors, data = stratified_pricedoors)
 summary(df_aov_door)
 
+#Tukey Analysis for door
 tukey_anova_door = TukeyHSD(df_aov_door)  # Tukey's Range test:
 tukey_anova_door
+#Plot Tukey door
+plot(tukey_anova_door)
+
+#Anova analysis for body style group
+df_aov_body = aov(stratified_pricebody$normalized_logprice ~ stratified_pricebody$body.style, data = stratified_pricebody)
+summary(df_aov_body)
+
+#Tukey Analysis for body style
+tukey_anova_body = TukeyHSD(df_aov_body)  # Tukey's Range test:
+tukey_anova_body
+#Plot Tukey Body Style
+plot(tukey_anova_body)
 
