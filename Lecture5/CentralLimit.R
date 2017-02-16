@@ -21,6 +21,8 @@ hist(x_means, breaks = breaks,
      main = 'Histogram of resampled means',
      xlab = 'Mean of non-Normal variable')
 qqnorm(unlist(x_means)) # Yay normality!
+#y <- unlist(x_means)
+#qqnorm(x_means)
 
 pop_mean_estimate = mean(x_means)
 pop_mean_estimate
@@ -48,3 +50,4 @@ hist(x_means, breaks = breaks,
 abline(v = pop_mean_estimate, lwd = 2, col = 'red')
 abline(v = ci_low, lwd = 2, col = 'red', lty = 3)
 abline(v = ci_high, lwd = 2, col = 'red', lty = 3)
+
