@@ -12,7 +12,7 @@ beta.par
 options(repr.plot.width=6, repr.plot.height=5)
 #Plot the prior with no data.
 triplot(beta.par, c(0, 0))
-#Plot the prior, likelihood and posterior three times as you update your belief based on collecting more data
+#Plot the prior, likelihood and posterior three times as you update the plan based on additional observations.
 #Compute posterior with the below observations.
 # 2 out of 20 drivers texting.
 beta.par218 <- beta.par + c(2, 18)
@@ -24,6 +24,8 @@ triplot(beta.par, c(6, 34))
 beta.par753 <- beta.par + c(7, 53)
 triplot(beta.par, c(7, 53))
 
+
+
 # Simulate the final posterior distribution
 options(repr.plot.width=8, repr.plot.height=5)
 beta.post.par <- beta.par + c(7, 53)
@@ -33,7 +35,7 @@ quants = quantile(post.sample, c(0.05, 0.95))
 breaks = seq(min(post.sample), max(post.sample), length.out = 50)
 #Plot the posterior with the 90% HDI shown
 hist(post.sample, breaks = breaks, 
-     main = 'Distribution of samples \n with 90% HDI',
+     main = 'Distribution of local numbers \n with 90% HDI',
      xlab = 'Sample value',
      ylab = 'Density')
 abline(v = quants[1], lty = 3, col = 'red', lwd = 3)
@@ -67,10 +69,6 @@ quantsnat
 # sample size = 60
 # Observed number of successes yobs 7(2+4+1).
 predplot(beta.par, 60, 7)
-## Check the model based on national observations.
-# sample size = 40
-# Observed number of successes yobs .(10+15)
-predplot(beta.par, 40,25)
 
 
 # Using this model forecast the number of drivers texting locally in a group of 100.
