@@ -7,7 +7,7 @@ read.auto = function(file = 'Automobile price data _Raw_.csv'){
   ## Read the csv file
   auto.price <- read.csv(file, header = TRUE, 
                          stringsAsFactors = FALSE)
-  
+  str(auto.price)
   ## Coerce some character columns to numeric
   numcols <- c('price', 'bore', 'stroke', 'horsepower', 'peak.rpm')
   auto.price[, numcols] <- lapply(auto.price[, numcols], as.numeric)
@@ -48,11 +48,10 @@ plot(lm.step)
 # Apply Singular Value Decomposition using Pseudo Inverse.
 # This data frame consists of number of catgegorical variables,in order to work with a model matrix we first need to convert these categorical 
 #variables into binary indicator variables.
-mod.mat = model.matrix(normalized_zprice ~ . -price, data = auto.price)
-mod.mat[1:10, ]
-# Remove intercept
-mod_withoutintercept.mat <- mod.mat[1:195,-1]
-M = as.matrix(mod_withoutintercept.mat)
+# Remove intercept and price
+mod.mat = model.matrix(normalized_zprice ~ . -price -1, data = auto.price)
+head(mod.mat)
+M = as.matrix(mod.mat)
 head(M)
 MTM = t(M) %*% M
 MTM
@@ -70,8 +69,8 @@ diagSDV
 #By looking at singlular values we can now deduce that this matrix is rank deficient with 15 values (45 - 59) below zero.
 # Let us now compute the pseudo inverse of MTM matrix.
 cat('Compute and print the inverse singular value matrix')
-d.trim = rep(0, 59)
-d.trim[1:44] =1/ mSVD$d[1:44]
+d.trim = rep(0, 60)
+d.trim[1:41] =1/ mSVD$d[1:41]
 mD = diag(d.trim)
 mD
 cat('Compute and print the pseudo inverse')
