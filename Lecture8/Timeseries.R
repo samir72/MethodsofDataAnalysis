@@ -148,4 +148,49 @@ dist.ts(season, col = 'seasonal + white noise')
 options(repr.pmales.extlot.width=8, repr.plot.height=6)
 plot.acf(season, col = 'seasonal + white noise', is.df = F)
 
+## Decomposition of the time series into components
+ts.decomp <- function(df, col = 'elec.ts', span = 0.5, Mult = TRUE, is.df = TRUE){
+  # if(Mult) temp = log(df[, col])  else temp = ts(df[, col]
+  if(is.df) temp = log(df[, col])  
+  else temp = df
+  spans = span * length(temp)  
+  fit <- stl(temp, s.window = "periodic", t.window = spans)
+  plot(fit, main = paste('Decompositon of',col,'with lowess span = ', as.character(span)))
+  fit$time.series
+}
+season.trend = ts.season(180, slope = 0.05)      
+temp = ts.decomp(season.trend, is.df = FALSE, Mult = FALSE)
 
+## Use a first order difference series to 
+## remove the trend
+ts.diff <- function(ts, lag = 1){
+  diff(ts, lag = lag)
+}
+diff.walk = ts.diff(ranWalk)
+options(repr.pmales.extlot.width=8, repr.plot.height=4)
+plot(diff.walk, main = 'Difference of random walk time series')
+
+## ---- Simple ARMA models ------
+## Simulate an ARMA process
+arma.sim = function(ar = c(0.9), ma = c(0), n = 300, mean = 1.0){
+  ar1.model = list(ar = ar, ma = ma)
+  print(ar1.model)
+  ar1 = mean + arima.sim(model = ar1.model, n = n)
+  ar1
+}
+## --- AR(1) process
+arMod = arma.sim()
+options(repr.pmales.extlot.width=8, repr.plot.height=4)
+plot(arMod, main = 'Plot of AR(1) model time series')
+
+options(repr.pmales.extlot.width=8, repr.plot.height=6)
+plot.acf(arMod, col = 'AR(1) model', is.df = F)
+
+## Function for ARIMA model estimation
+ts.model = function(ts, col = 'remainder', order = c(0,0,1)){
+  mod = arima(ts, order = order, include.mean = FALSE)
+  print(mod)
+  mod
+}
+mod.est = ts.model(arMod, col = 'AR(1) process', order = c(1,0,0))
+plot.acf(mod.est$resid[-1], col = 'AR(1) estimate', is.df = F)
